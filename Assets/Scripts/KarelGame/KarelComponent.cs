@@ -2,19 +2,30 @@
 using UnityAsync;
 using UnityEngine;
 
-public class KarolTest : MonoBehaviour
+public class KarelComponent : MonoBehaviour
 {
+    public KarelInstance KarelInstance { get; private set; }
+
     [SerializeField] private WorldFile _worldFile;
     [SerializeField] private WorldRenderer _worldRenderer;
     [SerializeField] private KarelRenderer _karelRenderer;
 
-    private async void Awake()
+    private void Awake()
     {
-        var instance = new KarelInstance(_worldFile);
-        _worldRenderer.World = instance.World;
-        _karelRenderer.Init(instance.Robot, _worldRenderer.GridOrigin);
+        KarelInstance = new KarelInstance(_worldFile);
+        _worldRenderer.World = KarelInstance.World;
+        _karelRenderer.Init(KarelInstance.Robot, _worldRenderer.GridOrigin);
+    }
 
-        var robot = instance.Robot;
+    public void Reset()
+    {
+        KarelInstance.Robot.Reset(_worldFile);
+        KarelInstance.World.Reset(_worldFile);
+    }
+
+    private async void DoTest()
+    {
+        var robot = KarelInstance.Robot;
         await Await.Seconds(1);
 
         try

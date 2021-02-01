@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class KarelWorld
@@ -27,6 +28,23 @@ public class KarelWorld
             _verticalWalls[wall.x, wall.y] = true;
         foreach (var beeper in file.Beepers)
             _beepers[beeper.Position.x, beeper.Position.y] = beeper.Count;
+    }
+
+    internal void Reset(WorldFile worldFile)
+    {
+        for (int y = 0; y < _beepers.GetLength(1); y++)
+        {
+            for (int x = 0; x < _beepers.GetLength(0); x++)
+            {
+                _beepers[x, y] = 0;
+                BeeperCountChanged.Invoke(new Vector2Int(x, y), 0);
+            }
+        }
+        foreach (var beeper in worldFile.Beepers)
+        {
+            _beepers[beeper.Position.x, beeper.Position.y] = beeper.Count;
+                BeeperCountChanged.Invoke(beeper.Position, beeper.Count);
+        }
     }
 
     public void PlaceBeeper(Vector2Int position)

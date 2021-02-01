@@ -7,11 +7,11 @@ public class CodeBlockElseStatement : CodeBlock
     public CodeBlockBody ConditionPassedBody { get; } = new CodeBlockBody();
     public CodeBlockBody ConditionFailedBody { get; } = new CodeBlockBody();
 
-    protected override async Task OnExecute()
+    protected override async Task OnExecute(CodeBlockContext ctx)
     {
-        if (await Condition.GetValue())
-            await ConditionFailedBody.Execute();
+        if (await Condition.GetValue(ctx))
+            await ConditionFailedBody.Execute(ctx);
         else
-            await ConditionFailedBody.Execute();
+            await ConditionFailedBody.Execute(ctx);
     }
 }

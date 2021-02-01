@@ -20,8 +20,11 @@ public class GameCursor
 
     public static void ClearBlocks()
     {
+        if (_codeBlocks == null) return;
         foreach (var block in _codeBlocks)
             GameObject.Destroy(block.gameObject);
         _codeBlocks = new UICodeBlock[0];
     }
+
+    public static UIDropArea DropArea { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using UnityAsync;
 using UnityEngine;
 
@@ -20,6 +21,14 @@ public class KarelRobot
         Direction = direction;
     }
 
+    internal void Reset(WorldFile worldFile)
+    {
+        Position = worldFile.KarelStartPosition;
+        Direction = worldFile.KarelStartDirection;
+        PositionChanged.Invoke(this);
+        DirectionChanged.Invoke(this);
+    }
+
     public KarelRobot(KarelInstance program, WorldFile file) : this(program, file.KarelStartPosition, file.KarelStartDirection)
     {
         BeeperBag = file.StartingBeepers;
@@ -28,42 +37,42 @@ public class KarelRobot
     public async Task Move()
     {
         if (_program.World.IsBlocked(this))
-            throw new System.Exception("Karel crashed.");
+            throw new Exception("Karel crashed.");
         else
         {
+            await _program.AwaitNextStep();
             Position += Direction.ToVector();
             PositionChanged?.Invoke(this);
-            await Await.Seconds(_program.StepTime);
         }
     }
 
     public async Task TurnLeft()
     {
+        await _program.AwaitNextStep();
         Direction = Direction.RotateCounterClockwise();
         DirectionChanged?.Invoke(this);
-        await Await.Seconds(_program.StepTime);
     }
 
     public async Task PutBeeper()
     {
         if (BeeperBag > 0)
         {
+            await _program.AwaitNextStep();
             BeeperBag--;
             _program.World.PlaceBeeper(Position);
-            await Await.Seconds(_program.StepTime);
         }
         else
-            throw new System.Exception("No beeper in beeper bag to place. :(");
+            throw new Exception("No beeper in beeper bag to place. :(");
     }
     public async Task PickBeeper()
     {
         if (_program.World.GetBeeperCount(Position) > 0)
         {
+            await _program.AwaitNextStep();
             BeeperBag++;
             _program.World.RemoveBeeper(Position);
-            await Await.Seconds(_program.StepTime);
         }
         else
-            throw new System.Exception("No beeper to pick up. :(");
+            throw new Exception("No beeper to pick up. :(");
     }
 }

@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Scene_KarelDev.unity
+    guid: 14e27e77687fd0f4c80c55f4631cbd5e
   m_configObjects: {}

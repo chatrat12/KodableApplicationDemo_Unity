@@ -5,5 +5,5 @@ public interface IReturnValue { }
 
 public interface IReturnValue<T> : IReturnValue
 {
-    Task<T> GetValue();
+    Task<T> GetValue(CodeBlockContext ctx);
 }

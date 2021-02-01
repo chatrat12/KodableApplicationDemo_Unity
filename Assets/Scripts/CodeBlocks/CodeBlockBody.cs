@@ -8,10 +8,10 @@ public class CodeBlockBody
 
     private List<CodeBlock> _childBlocks = new List<CodeBlock>();
 
-    public async Task Execute()
+    public async Task Execute(CodeBlockContext ctx)
     {
         foreach (var block in _childBlocks)
-            await block.Execute();
+            await block.Execute(ctx);
     }
 
     public void AddBlock(CodeBlock block)
@@ -28,4 +28,10 @@ public class CodeBlockBody
     {
         _childBlocks.Remove(block);
     }
+
+    public void InsertAfter(CodeBlock block, CodeBlock blockToAdd)
+        => InsertBlock(_childBlocks.IndexOf(block) + 1, blockToAdd);
+
+    public void InsertBefore(CodeBlock block, CodeBlock blockToAdd)
+        => InsertBlock(_childBlocks.IndexOf(block), blockToAdd);
 }

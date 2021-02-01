@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6051ca2cb4665408b1c3a642a17b93, type: 3}
   m_Name: UIResources
   m_EditorClassIdentifier: 
-  _codeBlockPrefab: {fileID: -4141807008457243883, guid: ea81b7b9056bc304490510ac0fd3f5b8,
+  _codeBlockPrefab: {fileID: 5624931217882124485, guid: 6c2b94c2acd4f8946bc9aa157bc5c333,
+    type: 3}
+  _bodyPrefab: {fileID: 7303201466612402686, guid: 5b6a560bbab458748891b87893450130,
     type: 3}
   _codeBlockColor: {r: 0, g: 0.56078434, b: 0.9960785, a: 1}
+  _functionColor: {r: 0.8679245, g: 0.026550306, b: 0.012281928, a: 1}
+  _currentStepColor: {r: 0.8396226, g: 0.68827957, b: 0, a: 1}

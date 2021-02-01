@@ -16,5 +16,5 @@ public class CodeBlockVariable<T> : CodeBlockVariable, IReturnValue<T>
 
     private T _value;
 
-    public Task<T> GetValue() => Task.FromResult(_value);
+    public Task<T> GetValue(CodeBlockContext ctx) => Task.FromResult(_value);
 }
